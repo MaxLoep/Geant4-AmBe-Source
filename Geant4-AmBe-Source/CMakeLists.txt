@@ -50,28 +50,34 @@ endif()
 # build Hadr06. This is so that we can run the executable directly because it
 # relies on these scripts being in the current working directory.
 #
-set(AmBe-NeutronSource_SCRIPTS
-    PlotRootFile.py
-    vis.mac
-    run.mac
-    radioactivedecay.mac
-    generalparticlesource.mac
-    scoringmesh.mac
-    Lochflansch.stl
-    Lochflansch.obj
-    Austrittsfenster.obj
-    FaradayCupMobile.obj
-  )
+# set(AmBe-NeutronSource_SCRIPTS
+#     PlotRootFile.py
+#     vis.mac
+#     run.mac
+#     radioactivedecay.mac
+#     generalparticlesource.mac
+#     scoringmesh.mac
+#     Lochflansch.stl
+#     Lochflansch.obj
+#     Austrittsfenster.obj
+#     FaradayCupMobile.obj
+#   )
 
-foreach(_script ${AmBe-NeutronSource_SCRIPTS})
-  configure_file(
-    ${PROJECT_SOURCE_DIR}/${_script}
-    ${PROJECT_BINARY_DIR}/${_script}
-    COPYONLY
-    )
-endforeach()
+# foreach(_script ${AmBe-NeutronSource_SCRIPTS})
+#   configure_file(
+#     ${PROJECT_SOURCE_DIR}/${_script}
+#     ${PROJECT_BINARY_DIR}/${_script}
+#     COPYONLY
+#     )
+# endforeach()
 
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
 install(TARGETS AmBe-NeutronSource DESTINATION bin)
+
+#if using Visual Studio, copy the executable from the "release"-folder to the build directory 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  set_target_properties(AmBe-NeutronSource PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR})
+endif()
